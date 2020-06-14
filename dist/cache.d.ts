@@ -1,19 +1,4 @@
-/**
- *
- * init cache as map obj
- *
- */
-/**
- *
- * cash id for current state
- *
- */
 export declare const injectState: <T>(id: string, initialState: T) => void;
-/**
- *
- * update cach state with given id
- *
- */
 export declare const update: <T>(id: string, newValues: T) => any;
 declare const _default: {
     data: Map<any, any>;
