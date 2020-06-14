@@ -35,5 +35,9 @@
   },
   "peerDependencies": {
     "react": ">= 16.8.0"
-  }
+  },
+  "colaborators": [
+    "SuperKareem",
+    "AhmedNassar"
+  ]
 }
