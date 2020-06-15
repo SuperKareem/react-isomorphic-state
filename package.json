@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-state",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "./dist/index.d.ts",
   "license": "MIT",
   "description": "global state without context, supports immutablity",
@@ -12,18 +12,21 @@
     "translate"
   ],
   "author": "AhmedNassar147 <nassarahmed750@gmail.com>",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "types": "./dist/types.d.ts",
   "files": [
     "./dist"
   ],
   "bugs": {
-    "url": "https://github.com/AhmedNassar147/react-isomorphic-state/issues"
+    "url": "https://github.com/AIMA-lab/react-isomorphic-state/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AhmedNassar147/react-isomorphic-state"
+    "url": "https://github.com/AIMA-lab/react-isomorphic-state"
   },
-   "scripts": {
+  "scripts": {
     "build": "tsc -p ."
   },
   "dependencies": {
@@ -38,6 +41,6 @@
   },
   "colaborators": [
     "SuperKareem",
-    "AhmedNassar"
+    "AhmedNassar147"
   ]
 }
