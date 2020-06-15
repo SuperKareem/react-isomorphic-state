@@ -1,72 +1,58 @@
 /*
  *
- * init cache as map obj
+ *  `react-isomorphic-state: `cache.ts`.
+ *  Initialize cache
  *
  */
-
-// use immtablejs
-const cache = new Map();
+import { Map, fromJS, isImmutable } from "immutable";
 
 // cash id for current state
-export const injectState = <T>(id: string, initialState: T) => {
+export const injectState = <T>(
+  id: string,
+  initialState: T,
+  cache: Map<string, any>
+) => {
   id = (id || "").toString();
+  const state = isImmutable(initialState) ? initialState : fromJS(initialState);
 
   // if no id we stop appending
   if (!id) {
-    return;
+    throw new Error(
+      `Function \`injectState\`: \`id\` is required already exsists.`
+    );
+  }
+
+  // if cash does not contain given id,
+  // append new entry with given initial value
+  if (!cache.has(id)) {
+    return cache.set(id, state);
   }
 
   // if cash has current id
-  if (cache.has(id)) {
-    throw new Error(`${id} id exsists`);
-  }
-
-  // if cash has't current id we append new entry it with initial value
-  if (!cache.has(id)) {
-    cache.set(id, initialState);
-
-    return;
-  }
+  throw new Error(`Function \`injectState\`: \`${id}\` already exsists.`);
 };
 
 // update cach state with given id
-export const update = <T>(id: string, newValues: T) => {
-  id = (id || "").toString();
-
-  if (!id) {
-    return null;
+export const updateCache = <T>(
+  path: string[] | string,
+  newValues: T,
+  cache: Map<string, any>
+) => {
+  if (typeof path === "string") {
+    path = (path || "").toString();
+    path = [path];
   }
 
-  let currentIdCachedValues = cache.get(id);
+  const values = isImmutable(newValues) ? newValues : fromJS(newValues);
 
-  // 1- user will send partial state to update
-  // 2- user will send whole state to update
-  if (Array.isArray(currentIdCachedValues)) {
-    currentIdCachedValues = [...currentIdCachedValues, newValues];
-
-    cache.set(id, currentIdCachedValues);
-    return currentIdCachedValues;
+  if (!path) {
+    return undefined;
   }
 
-  if (
-    !Array.isArray(currentIdCachedValues) &&
-    typeof currentIdCachedValues === "object"
-  ) {
-    currentIdCachedValues = { ...currentIdCachedValues, ...newValues };
-
-    cache.set(id, currentIdCachedValues);
-    return currentIdCachedValues;
-  }
-
-  currentIdCachedValues = newValues;
-
-  cache.set(id, currentIdCachedValues);
-
-  return currentIdCachedValues;
+  return cache.setIn(path, values);
 };
 
 export default {
-  data: cache,
-  update,
+  updateCache,
   injectState,
 };

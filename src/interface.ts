@@ -1,15 +1,25 @@
+import * as R from "react";
+import { Map } from "immutable";
+export type ItratableSubscriber<T> = R.Dispatch<R.SetStateAction<Iterable<T>>>;
 
-export type SubscriberFunc<T> = (newState: T) => any;
+// export type SubscriberFunc<T= ItratableSubscriber<T>> = (
+//   newState: T
+// ) => ;
 
 export interface ConsumerProps<T> {
-  id: string; 
-  initialState?: T
+  id: string;
+  initialState?: T;
 }
 
-export type ConsumerResult<T> = [T, (preStateOrNextValue: T | SubscriberFunc<T>) => void, Map<string, T>]
+export type ConsumerResult<T> = [
+  Iterable<T>,
+  (preStateOrNextValue: Iterable<T> | UpdatedCallback<T>) => void,
+  Map<string, any>
+];
 
 export interface ResultProps<T> {
-  useConsumerState: () => ConsumerResult<T>,
-  useValue: () => T,
-  getCach: () => Map<string, T>,
+  useConsumerState: () => ConsumerResult<T>;
+  getCach: () => Map<string, T>;
 }
+
+export type UpdatedCallback<T> = (oldState: Iterable<T>) => Iterable<T>;
